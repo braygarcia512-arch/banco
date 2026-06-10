@@ -24,6 +24,7 @@ int op;
 int inicio;
 char ID[30];
 char llave[21];
+int deposito_inicial;
 
 void crear_cuenta(struct usuario e[], int n)
 {
@@ -134,7 +135,8 @@ void iniciar_sesion(struct usuario e[], int n)
 void depositar()
 {
 
-
+    printf("Cuanto quieres depositarte?");
+    scanf("%d", &deposito_inicial);
 
 }
 
