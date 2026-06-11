@@ -115,29 +115,31 @@ void iniciar_sesion(struct usuario e[], int n)
                 e[i].anio,
                 e[i].curp,
                 e[i].contrasena,
-                e[i].saldo) == 8)
+                e[i].saldo) == 9)
     {
         i++;
     }
 
 
 
-    if (strcmp(e[n].curp,ID) && strcmp(e[n].contrasena,llave) == 0)
+    if (strcmp(e[0].curp,ID) == 0 && strcmp(e[0].contrasena,llave) == 0)
     {
         printf("acceso concedido");
     }
     else
     {
-    printf("Acceso denegado");
+        printf("Acceso denegado");
+        return;
     }    
 }
 
-void depositar()
+void depositar(struct usuario e[], int n)
 {
 
     printf("Cuanto quieres depositarte?");
     scanf("%d", &deposito_inicial);
 
+    
 }
 
 
@@ -148,7 +150,7 @@ int main()
 
     usuario e[10];
 
-    printf("\nbienvenido a tu aplicacion de vacaciones");
+    printf("\nbienvenido a tu aplicacion de banco");
     printf("\nQue desea hacer?");
     printf("\n1.- Crear cuenta");
     printf("\n2.- Iniciar sesion\n");
