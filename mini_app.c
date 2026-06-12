@@ -203,7 +203,8 @@ int main()
         {
         case 1:
 
-            printf("este es tu saldo");    
+            printf("este es tu saldo");
+            printf("\nSaldo %d", e[0].saldo);  
 
             break;
         
@@ -236,7 +237,6 @@ int main()
             printf("\naño de nacimiento: %d", e[0].anio);
             printf("\ncontraseña: %s", e[0].contrasena);
             printf("\nID: %s", e[0].curp);
-            printf("\nSaldo %d", e[0].saldo);
 
             break;
 
