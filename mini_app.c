@@ -21,7 +21,31 @@ int op;
 int inicio;
 char ID[30];
 char llave[21];
-int deposito_inicial;
+int deposito;
+int retiro;
+
+void guardar_usuario(usuario e[], int n)
+{
+    FILE *ar = fopen(e[n].curp, "w");
+
+    if(ar == NULL)
+    {
+        printf("Error al guardar usuario\n");
+        return;
+    }
+
+    fprintf(ar,"%s %s %s\n""%d %d %d\n""%s\n""%s\n""%d\n",
+            e[n].nombre,
+            e[n].apellido_paterno,
+            e[n].apellido_materno,
+            e[n].dia,
+            e[n].mes,
+            e[n].anio,
+            e[n].curp,
+            e[n].contrasena,
+            e[n].saldo);
+        fclose(ar);
+}
 
 void crear_cuenta(struct usuario e[], int n)
 {
@@ -136,14 +160,38 @@ void iniciar_sesion(struct usuario e[], int n)
 void depositar(struct usuario e[], int n)
 {
 
-    printf("Cuanto quieres depositarte?");
-    scanf("%d", &deposito_inicial);
+    printf("Cuanto quieres depositarte?: ");
+    scanf("%d", &deposito);
 
+    e[n].saldo += deposito;
+
+    guardar_usuario(e,n);
+
+    printf("\nDeposito hecho con exito");
+    printf("\ntu saldo actual es de %d pesos",e[n].saldo);
     
 }
 
 
+void retirar(usuario e[],int n)
+{
 
+    printf("\nCuanto deseas retirar: ");
+    scanf("%d", &retiro);
+
+    if (retiro > e[n].saldo)
+    {
+        printf("\nTienes menos dinero y no puedes retirar lo solicitado");
+        return;
+    }
+    
+    e[n].saldo -= retiro;
+
+    guardar_usuario(e,n);
+
+    printf("\nTu saldo actual es de %d pesos", e[n].saldo);
+
+}
 
 int main()
 {
@@ -210,7 +258,7 @@ int main()
         
         case 2:
             
-            printf("¿Cuanto deseas retirar");    
+            retirar(e,0); 
 
             break;
         
@@ -222,7 +270,7 @@ int main()
 
         case 4:
 
-            printf("¿Cuanto quieres depositar");
+            depositar(e,0);
 
             break;
 
@@ -253,6 +301,6 @@ int main()
 
 
 
-    ("\n"); system("pause");
+    printf("\n"); system("pause");
     return 0;
 }
