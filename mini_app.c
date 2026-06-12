@@ -17,9 +17,6 @@ typedef struct usuario
     int saldo;
 }usuario;
 
-
-
-int u;
 int op;
 int inicio;
 char ID[30];
@@ -42,6 +39,7 @@ void crear_cuenta(struct usuario e[], int n)
     scanf("%d", &e[n].anio);
     printf("\nIngresa una contraseña(maximo 20 digitos o letras) \n");
     scanf("%s", e[n].contrasena);
+    e[n].saldo = 0;
 
     
 }
@@ -93,7 +91,7 @@ void iniciar_sesion(struct usuario e[], int n)
     
     printf("\nMete tu usuario generado\n");
     scanf("%s", ID);
-    printf("\nMete tu contraseña\n");
+    printf("\nMete tu clave\n");
     scanf("%s", llave);
 
     int i = 0;
@@ -103,6 +101,7 @@ void iniciar_sesion(struct usuario e[], int n)
     if (ar == NULL)
     {
         printf("\nError al solicitar la informacion de tu cuenta");
+        return;
     }
     
     while (fscanf(ar,
@@ -110,14 +109,15 @@ void iniciar_sesion(struct usuario e[], int n)
                 e[i].nombre,
                 e[i].apellido_paterno,
                 e[i].apellido_materno,
-                e[i].dia,
-                e[i].mes,
-                e[i].anio,
+                &e[i].dia,
+                &e[i].mes,
+                &e[i].anio,
                 e[i].curp,
                 e[i].contrasena,
-                e[i].saldo) == 9)
+                &e[i].saldo) == 9)
     {
         i++;
+        fclose(ar);
     }
 
 
@@ -158,26 +158,27 @@ int main()
     
     if (inicio == 1)
     {
-        crear_cuenta(e,u);
-        crear_curp(e,u);
+        crear_cuenta(e,0);
+        crear_curp(e,0);
         
-        FILE * ar = fopen(e[u].curp,"a");
+        FILE * ar = fopen(e[0].curp,"a");
         
         if (ar == NULL)
         {
             perror("\nHubo un error de creacion de usuario");
+            return 0;
         }
 
-        fprintf(ar, "%s %s %s\n" "%d %d %d\n" "%s\n" "%s\n" "%d\n",
-            e[u].nombre,
-            e[u].apellido_paterno,
-            e[u].apellido_materno,
-            e[u].dia,
-            e[u].mes,
-            e[u].anio,
-            e[u].curp,
-            e[u].contrasena,
-            e[u].saldo);
+        fprintf(ar,"%s %s %s\n""%d %d %d\n""%s\n""%s\n""%d\n",
+        e[0].nombre,
+        e[0].apellido_paterno,
+        e[0].apellido_materno,
+        e[0].dia,
+        e[0].mes,
+        e[0].anio,
+        e[0].curp,
+        e[0].contrasena,
+        e[0].saldo);
 
         fclose(ar);
         printf("\ncreacion de cuenta exitosa");
@@ -187,7 +188,7 @@ int main()
     }
     else if (inicio == 2)
     {
-        iniciar_sesion(e,u);
+        iniciar_sesion(e,0);
 
 
         printf("\n¿Que deseas hacer?");
@@ -227,14 +228,15 @@ int main()
         case 5:
 
             printf("Aqui esta tu informacion personal");
-            printf("\nnombre: %s", e[u].nombre);
-            printf("\napellido paterno: %s", e[u].apellido_paterno);
-            printf("\napellido materno: %s", e[u].apellido_materno);
-            printf("\ndia de nacimiento: %d", e[u].dia);
-            printf("\nmes de nacimiento: %d", e[u].mes);
-            printf("\naño de nacimiento: %d", e[u].anio);
-            printf("\ncontraseña: %s", e[u].contrasena);
-            printf("\nID: %s", e[u].curp);
+            printf("\nnombre: %s", e[0].nombre);
+            printf("\napellido paterno: %s", e[0].apellido_paterno);
+            printf("\napellido materno: %s", e[0].apellido_materno);
+            printf("\ndia de nacimiento: %d", e[0].dia);
+            printf("\nmes de nacimiento: %d", e[0].mes);
+            printf("\naño de nacimiento: %d", e[0].anio);
+            printf("\ncontraseña: %s", e[0].contrasena);
+            printf("\nID: %s", e[0].curp);
+            printf("\nSaldo %d", e[0].saldo);
 
             break;
 
@@ -251,6 +253,6 @@ int main()
 
 
 
-    printf("\n"); system("pause");
+    ("\n"); system("pause");
     return 0;
 }
