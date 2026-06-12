@@ -287,70 +287,74 @@ int main()
     }
     else if (inicio == 2)
     {
+    
         iniciar_sesion(e,0);
 
-
-        printf("\n¿Que deseas hacer?");
-        printf("\n1.- Checar saldo");
-        printf("\n2.- Retirar saldo");
-        printf("\n3.- Hacer transferencia");
-        printf("\n4.- Depositar");
-        printf("\n5.- Checar tu informacion personal\n");
-        scanf("%d", &op);
-
-        switch (op)
+        while (op != 6)
         {
-        case 1:
+            printf("\n*********************************************************");
+            printf("\n¿Que deseas hacer?");
+            printf("\n1.- Checar saldo");
+            printf("\n2.- Retirar saldo");
+            printf("\n3.- Hacer transferencia");
+            printf("\n4.- Depositar");
+            printf("\n5.- Checar tu informacion personal");
+            printf("\n6.- cerrar el programa\n");
+            scanf("%d", &op);
 
-            printf("este es tu saldo");
-            printf("\nSaldo %d", e[0].saldo);  
+            switch (op)
+            {
+            case 1:
 
-            break;
-        
-        case 2:
+                printf("este es tu saldo");
+                printf("\nSaldo %d", e[0].saldo);  
+
+                break;
             
-            retirar(e,0); 
+            case 2:
+                
+                retirar(e,0); 
 
-            break;
-        
-        case 3:
+                break;
+            
+            case 3:
 
-            deposito(e,0);
+                deposito(e,0);
 
-            break;
+                break;
 
-        case 4:
+            case 4:
 
-            depositar(e,0);
+                depositar(e,0);
 
-            break;
+                break;
 
-        case 5:
+            case 5:
+                printf("*********************************************************");
+                printf("\nAqui esta tu informacion personal");
+                printf("\nnombre: %s", e[0].nombre);
+                printf("\napellido paterno: %s", e[0].apellido_paterno);
+                printf("\napellido materno: %s", e[0].apellido_materno);
+                printf("\ndia de nacimiento: %d", e[0].dia);
+                printf("\nmes de nacimiento: %d", e[0].mes);
+                printf("\naño de nacimiento: %d", e[0].anio);
+                printf("\ncontraseña: %s", e[0].contrasena);
+                printf("\nID: %s", e[0].curp);
+                printf("\n*********************************************************");
 
-            printf("Aqui esta tu informacion personal");
-            printf("\nnombre: %s", e[0].nombre);
-            printf("\napellido paterno: %s", e[0].apellido_paterno);
-            printf("\napellido materno: %s", e[0].apellido_materno);
-            printf("\ndia de nacimiento: %d", e[0].dia);
-            printf("\nmes de nacimiento: %d", e[0].mes);
-            printf("\naño de nacimiento: %d", e[0].anio);
-            printf("\ncontraseña: %s", e[0].contrasena);
-            printf("\nID: %s", e[0].curp);
+                break;
 
-            break;
-
-        default:
-            break;
+            default:
+                break;
+            }
+            
         }
-
     }
     else
     {
-        printf("\ntu opcion no es valida");
+        printf("\n tu opcion no es valida");
     }
-    
-
-
+        
 
     printf("\n"); system("pause");
     return 0;
