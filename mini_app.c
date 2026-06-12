@@ -21,10 +21,8 @@ int op;
 int inicio;
 char ID[30];
 char llave[21];
-int deposito;
-int retiro;
 
-void guardar_usuario(usuario e[], int n)
+void actualizar_usuario(usuario e[], int n)
 {
     FILE *ar = fopen(e[n].curp, "w");
 
@@ -159,22 +157,23 @@ void iniciar_sesion(struct usuario e[], int n)
 
 void depositar(struct usuario e[], int n)
 {
+    int deposito;
 
     printf("Cuanto quieres depositarte?: ");
     scanf("%d", &deposito);
 
     e[n].saldo += deposito;
 
-    guardar_usuario(e,n);
+    actualizar_usuario(e,n);
 
     printf("\nDeposito hecho con exito");
     printf("\ntu saldo actual es de %d pesos",e[n].saldo);
     
 }
 
-
-void retirar(usuario e[],int n)
+void retirar(struct usuario e[],int n)
 {
+    int retiro;
 
     printf("\nCuanto deseas retirar: ");
     scanf("%d", &retiro);
@@ -187,11 +186,63 @@ void retirar(usuario e[],int n)
     
     e[n].saldo -= retiro;
 
-    guardar_usuario(e,n);
+    actualizar_usuario(e,n);
 
     printf("\nTu saldo actual es de %d pesos", e[n].saldo);
 
 }
+
+void deposito(struct usuario e[],int n)
+{
+    char depositante[20];
+    int deposito;
+    int i = 1;
+
+    printf("\nA quien le quieres depositar?");
+    scanf("%s", depositante);
+
+    FILE * er = fopen(depositante,"r+");
+
+    if (er == NULL)
+    {
+        printf("A la persona que le quieres depositar no existe en el sistema");
+        return;
+    }
+
+    fscanf(er,
+                "%19s %19s %19s %d %d %d %24s %20s %d",
+                e[i].nombre,
+                e[i].apellido_paterno,
+                e[i].apellido_materno,
+                &e[i].dia,
+                &e[i].mes,
+                &e[i].anio,
+                e[i].curp,
+                e[i].contrasena,
+                &e[i].saldo);
+
+
+    fclose(er);
+
+    printf("\nCuando deseas depositar");
+    scanf("%d", &deposito);
+
+    if (deposito > e[n].saldo)
+    {
+        printf("\nNo tienes suficiente dinero para hacer el deposito");
+        return;
+    }
+    
+    e[1].saldo += deposito;
+    e[n].saldo -= deposito;
+
+    actualizar_usuario(e,1);
+    actualizar_usuario(e,0);
+
+    printf("\nTu deposito fue exitoso");
+
+}
+
 
 int main()
 {
@@ -264,7 +315,7 @@ int main()
         
         case 3:
 
-            printf("¿A quien deseas tranferir");
+            deposito(e,0);
 
             break;
 
